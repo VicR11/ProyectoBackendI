@@ -49,14 +49,17 @@ window.addEventListener('load', function () {
                                               turno.id +
                                               '</button>';
 
-                    //armamos cada columna de la fila
-                    //como primer columna pondremos el boton modificar
-                    //luego los datos de la pelicula
-                    //como ultima columna el boton eliminar
+                   const fechaHora = new Date(turno.fechaHora);
+
+                   // Obtener la fecha local formateada
+                   const fechaFormateada = fechaHora.toLocaleDateString('es-ES'); // Cambia 'es-ES' por tu configuración regional si es necesario
+
+                   // Obtener la hora local formateada
+                   const horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
                     turnoRow.innerHTML = '<td>' + updateButton + '</td>' +
                             '<td class=\"td_odontologo\">' + turno.odontologo.nombre.toUpperCase()+" "+turno.odontologo.apellido.toUpperCase() + '</td>' +
                             '<td class=\"td_paciente\">' + turno.paciente.nombre.toUpperCase()+" "+turno.paciente.apellido.toUpperCase()  + '</td>' +
-                            '<td class=\"td_fechaHora\">' + new Date(turno.fechaHora).toISOString().toUpperCase() + '</td>' +
+                            '<td class=\"td_fechaHora\">'  + fechaFormateada + ' ' + horaFormateada + '</td>' +
                             '<td>' + deleteButton + '</td>';
 
                 };

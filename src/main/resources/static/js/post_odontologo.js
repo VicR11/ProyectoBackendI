@@ -6,7 +6,7 @@ window.addEventListener('load', function () {
 
     //Ante un submit del formulario se ejecutará la siguiente funcion
     formulario.addEventListener('submit', function (event) {
-
+         event.preventDefault();
        //creamos un JSON que tendrá los datos de la nueva película
         const formData = {
             nombre: document.querySelector('#nombreOdontologo').value,

@@ -19,9 +19,9 @@ public class TurnoController {
     ITurnoService iTurnoService;
 
     @PostMapping
-    public ResponseEntity<?> guardarTurno(@RequestBody Turno turno){
-        iTurnoService.guardarTurno(turno);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<Turno> guardarTurno(@RequestBody Turno turno){
+        Turno nuevoTurno = iTurnoService.guardarTurno(turno);
+        return ResponseEntity.ok(nuevoTurno);
     }
 
     @GetMapping("/{id}")

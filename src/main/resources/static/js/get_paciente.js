@@ -23,6 +23,7 @@ window.addEventListener('load', function () {
               .then(data => {
               console.log(data);
               //recorremos la colección de peliculas del JSON
+
                  for(paciente of data){
                     //por cada pelicula armaremos una fila de la tabla
                     //cada fila tendrá un id que luego nos permitirá borrar la fila si eliminamos la pelicula
@@ -54,8 +55,8 @@ window.addEventListener('load', function () {
                     //luego los datos de la pelicula
                     //como ultima columna el boton eliminar
                     pacienteRow.innerHTML = '<td>' + updateButton + '</td>' +
-                            '<td class=\"td_titulo\">' + paciente.nombre.toUpperCase() + '</td>' +
-                            '<td class=\"td_categoria\">' + paciente.apellido.toUpperCase() + '</td>' +
+                            '<td class=\"td_nombre\">' + paciente.nombre.toUpperCase() + '</td>' +
+                            '<td class=\"td_apellido\">' + paciente.apellido.toUpperCase() + '</td>' +
                             '<td class=\"td_domicilio\">' + paciente.domicilio.toUpperCase() + '</td>' +
                             '<td class=\"td_dni\">' + paciente.dni + '</td>' +
                             '<td class=\"td_fechaalta\">' + new Date(paciente.fechaDeAlta).toISOString().split('T')[0].toUpperCase() + '</td>' +

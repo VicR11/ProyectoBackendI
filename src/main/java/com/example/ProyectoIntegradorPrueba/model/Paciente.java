@@ -14,9 +14,12 @@ public class Paciente {
     private Long id;
     private String nombre;
     private String apellido;
-    private String domicilio;
     private Integer dni;
     private LocalDate fechaDeAlta;
+
+    @ManyToOne(cascade = CascadeType.ALL) // Guarda automáticamente el domicilio si no existe
+    @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
+    private Domicilio domicilio;
 
     @OneToMany(mappedBy = "paciente")
     @JsonIgnore
@@ -40,11 +43,11 @@ public class Paciente {
         this.apellido = apellido;
     }
 
-    public String getDomicilio() {
+    public Domicilio getDomicilio() {
         return domicilio;
     }
 
-    public void setDomicilio(String domicilio) {
+    public void setDomicilio(Domicilio domicilio) {
         this.domicilio = domicilio;
     }
 

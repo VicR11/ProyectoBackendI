@@ -22,8 +22,10 @@ window.addEventListener('load', function () {
               .then(response => response.json())
               .then(data => {
               console.log(data);
+
+
               //recorremos la colección de peliculas del JSON
-                 for(odontologo of data){
+                 for(let odontologo of data){
                     //por cada pelicula armaremos una fila de la tabla
                     //cada fila tendrá un id que luego nos permitirá borrar la fila si eliminamos la pelicula
                     var table = document.getElementById("odontologoTable");
@@ -54,8 +56,9 @@ window.addEventListener('load', function () {
                     //luego los datos de la pelicula
                     //como ultima columna el boton eliminar
                     odontologoRow.innerHTML = '<td>' + updateButton + '</td>' +
-                            '<td class=\"td_titulo\">' + odontologo.nombre.toUpperCase() + '</td>' +
-                            '<td class=\"td_categoria\">' + odontologo.apellido.toUpperCase() + '</td>' +
+                            '<td class=\"td_nombre\">' + odontologo.nombre.toUpperCase() + '</td>' +
+                            '<td class=\"td_apellido\">' + odontologo.apellido.toUpperCase() + '</td>' +
+                            '<td class=\"td_matricula\">' + odontologo.matricula + '</td>' +
                             '<td>' + deleteButton + '</td>';
 
                 };
