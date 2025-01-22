@@ -30,8 +30,6 @@ public class DomicilioService implements IDomicilioService{
             Domicilio nuevoDomicilio = iDomicilioRepository.save(domicilio);
             return nuevoDomicilio;
         } else {
-            // Si no existe, puedes manejar el caso según sea necesario
-            // Por ejemplo, lanzar una excepción o retornar un mensaje de error
             throw new EntityNotFoundException("El domicilio con el ID " + domicilio.getId() + " no existe.");
         }
     }

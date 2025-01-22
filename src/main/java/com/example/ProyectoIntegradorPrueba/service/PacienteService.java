@@ -1,5 +1,6 @@
 package com.example.ProyectoIntegradorPrueba.service;
 
+import com.example.ProyectoIntegradorPrueba.exception.ResourceNotFoundException;
 import com.example.ProyectoIntegradorPrueba.model.Odontologo;
 import com.example.ProyectoIntegradorPrueba.model.Paciente;
 import com.example.ProyectoIntegradorPrueba.repository.IPacienteRepository;
@@ -26,18 +27,18 @@ public class PacienteService implements IPacienteService{
     }
 
     @Override
-    public Paciente buscarPorId(Long id) {
+    public Paciente buscarPorId(Long id) throws ResourceNotFoundException {
         logger.info("Iniciando busqueda de paciente por id: {}", id);
         Optional<Paciente> pacienteBuscado = iPacienteRepository.findById(id);
         if (pacienteBuscado.isPresent()) {
             return pacienteBuscado.get();
         } else {
-            throw new EntityNotFoundException("El paciente con el ID " + id + " no existe.");
+            throw new ResourceNotFoundException("El paciente con el ID " + id + " no existe.");
         }
     }
 
     @Override
-    public Paciente buscarPorNombreApellido(String nombre, String apellido) {
+    public Paciente buscarPorNombreApellido(String nombre, String apellido) throws ResourceNotFoundException{
         logger.info("Iniciando busqueda de paciente: {}", nombre, apellido);
         String nombreNormalizado = nombre.toLowerCase();
         String apellidoNormalizado = apellido.toLowerCase();
@@ -45,7 +46,7 @@ public class PacienteService implements IPacienteService{
         if (pacienteBuscadoByNombreApellido.isPresent()) {
             return pacienteBuscadoByNombreApellido.get();
         } else {
-            throw new EntityNotFoundException("El paciente" + nombre+" "+apellido + " no existe.");
+            throw new ResourceNotFoundException("El paciente " + nombre+" "+apellido + " no existe.");
         }
     }
 

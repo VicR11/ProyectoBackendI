@@ -1,5 +1,6 @@
 package com.example.ProyectoIntegradorPrueba.service;
 
+import com.example.ProyectoIntegradorPrueba.exception.ResourceNotFoundException;
 import com.example.ProyectoIntegradorPrueba.model.Odontologo;
 import com.example.ProyectoIntegradorPrueba.repository.IOdontologoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,30 +27,40 @@ public class OdontologoService implements IOdontologoService{
     }
 
     @Override
-    public Odontologo buscarPorId(Long id) {
+    public Odontologo buscarPorId(Long id) throws ResourceNotFoundException {
         // findById carga la entidad completa
         logger.info("Iniciando buscar odontologo con: {}", id);
-        Optional<Odontologo> odontologoBuscado = iodontologoRepository.findById(id);
-        if (odontologoBuscado.isPresent()) {
-            return odontologoBuscado.get();
-        } else {
-            throw new EntityNotFoundException("El odontólogo con el ID " + id + " no existe.");
-        }
+
+
+        //try {
+            // Intentar buscar el odontólogo en la base de datos
+            Optional<Odontologo> odontologoBuscado = iodontologoRepository.findById(id);
+            if (odontologoBuscado.isPresent()) {
+                return odontologoBuscado.get();
+            } else {
+                // Lanzar ResourceNotFoundException si no se encuentra el odontólogo
+                throw new ResourceNotFoundException("No se encontró el odontólogo con ID " + id);
+            }
+        /*} catch (Exception ex) {
+            // Capturar cualquier excepción inesperada y encapsularla en InternalServerErrorException
+            logger.error("Error inesperado al buscar el odontólogo con ID: {}", id, ex);
+            throw new InternalServerErrorException("Ocurrió un error interno al buscar el odontólogo con ID " + id);
+        }*/
     }
 
     @Override
-    public Odontologo buscarPorMatricula(String matricula) {
+    public Odontologo buscarPorMatricula(String matricula) throws ResourceNotFoundException {
         logger.info("Iniciando buscar odontologo por matricula: {}", matricula);
         Optional<Odontologo> odontologoBuscadoByMatricula = iodontologoRepository.findByMatricula(matricula);
         if (odontologoBuscadoByMatricula.isPresent()) {
             return odontologoBuscadoByMatricula.get();
         } else {
-            throw new EntityNotFoundException("El odontólogo con la matricula " + matricula + " no existe.");
+            throw new ResourceNotFoundException("El odontólogo con la matricula " + matricula + " no existe.");
         }
     }
 
     @Override
-    public Odontologo buscarPorNombreApellido(String nombre, String apellido) {
+    public Odontologo buscarPorNombreApellido(String nombre, String apellido) throws ResourceNotFoundException{
         logger.info("Iniciando buscar odontologo: {}", nombre, apellido);
         String nombreNormalizado = nombre.toLowerCase();
         String apellidoNormalizado = apellido.toLowerCase();
@@ -57,7 +68,7 @@ public class OdontologoService implements IOdontologoService{
         if (odontologoBuscadoByNombreAndApellido.isPresent()) {
             return odontologoBuscadoByNombreAndApellido.get();
         } else {
-            throw new EntityNotFoundException("El odontólogo" + nombre+ " "+apellido + " no existe.");
+            throw new ResourceNotFoundException("El odontólogo " + nombre+ " "+apellido + " no existe.");
         }
     }
 
@@ -65,16 +76,12 @@ public class OdontologoService implements IOdontologoService{
     @Override
     public Odontologo modificarOdontologo(Odontologo odontologo) {
         logger.info("Iniciando modificacion de odontologo: {}", odontologo);
-        //iodontologoRepository.save(odontologo);
         Optional<Odontologo> odontologoExistente = iodontologoRepository.findById(odontologo.getId());
 
         if (odontologoExistente.isPresent()) {
-            // Si existe, se actualizan los datos
             iodontologoRepository.save(odontologo);
             return odontologoExistente.get();
         } else {
-            // Si no existe, puedes manejar el caso según sea necesario
-            // Por ejemplo, lanzar una excepción o retornar un mensaje de error
             throw new EntityNotFoundException("El odontólogo con el ID " + odontologo.getId() + " no existe.");
         }
     }
